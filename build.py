@@ -67,14 +67,20 @@ def reset_files():
     ) as loadfile:
         loadfile.write("# we must create all triggers here\n")
         loadfile.write("scoreboard objectives add get_head trigger\n")
+        loadfile.write("scoreboard objectives add version trigger\n")
     with open(
         "data/allplayerheads/function/tick.mcfunction", "w", encoding="utf-8"
     ) as tickfile:
         tickfile.write("scoreboard players enable @a get_head\n")
+        tickfile.write("scoreboard players enable @a my_trigger\n")
         tickfile.write(
             "execute as @a[scores={get_head=1..}] at @s run function allplayerheads:handle_trigger\n"
         )
         tickfile.write("scoreboard players set @a[scores={get_head=1..}] get_head 0\n")
+        tickfile.write(
+            "execute as @a[scores={version=1..}] run function allplayerheads:version\n"
+        )
+        tickfile.write("scoreboard players set @a[scores={version=1..}] version 0")
 
 
 reset_files()
