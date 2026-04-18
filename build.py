@@ -93,3 +93,12 @@ with open("heads.csv", "r", encoding="utf-8") as csvfile:
                 f'data modify storage allplayerheads:data heads.{index} set value {{texture: "{texture}"}}\n'
             )
 trigger_spinner.succeed(f"{bcolors.OKGREEN}Finished creating data!{bcolors.ENDC}")
+version_spinner = Halo(text="Setting version...", spinner="dots")
+version_spinner.start()
+with open("version.txt", "r", encoding="utf-8") as versionfile:
+    version = versionfile.read().strip()
+with open(
+    "data/allplayerheads/function/version.mcfunction", "w", encoding="utf-8"
+) as versionfile:
+    versionfile.write(f'# tellraw @s {"text": "Version {version}"}\n')
+version_spinner.succeed(f"{bcolors.OKGREEN}Finished setting version!{bcolors.ENDC}")

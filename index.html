@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AllPlayerHeads tool</title>
+    <link rel="stylesheet" href="https://unpkg.com/@knadh/oat/oat.min.css" />
+    <script src="https://unpkg.com/@knadh/oat/oat.min.js" defer></script>
+  </head>
+  <body>
+    <article class="card">
+      <h1>AllPlayerHeads tool</h1>
+      <div data-field>
+        <label><h3>Select your datapack version</h3></label>
+        <select aria-label="Select your datapack version" id="version">
+          <option value="">Select version</option>
+          <option value="1.0">1.0</option>
+        </select>
+      </div>
+      <label data-field>
+        <h3>
+          What is the Minecraft URL for your head (found under For Developers)?
+        </h3>
+        <input
+          id="url"
+          type="text"
+          placeholder="e.g. http://textures.minecraft.net/texture/ffac8e0b1f93aa..."
+        />
+      </label>
+      <button id="calculate">Calculate</button>
+      <textarea id="output" disabled></textarea>
+    </article>
+    <script>
+      function searchCSV(csvText, searchString) {
+        const lines = csvText.split("\n");
+        const index = lines.findIndex((line) => line.includes(searchString));
+        return index; // -1 if not found
+      }
+      let calculateBtn = document.getElementById("calculate");
+      let version = document.getElementById("version");
+      let url = document.getElementById("url");
+      let output = document.getElementById("output");
+      calculateBtn.addEventListener("click", async () => {
+        let versionNum = version.value;
+
+        async function getData() {
+          const url = `versions/${versionNum}.csv`;
+          try {
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error(`Response status: ${response.status}`);
+            }
+            return response.text();
+          } catch (error) {
+            console.error(error.message);
+          }
+        }
+
+        search = url.value.replace(
+          "http://textures.minecraft.net/texture/",
+          "",
+        );
+        let csvText = await getData(); // await the promise
+        let index = searchCSV(csvText, search);
+        output.value = `${index + 1}\nOr type this command:\n/trigger get_head set ${index + 1}`;
+      });
+    </script>
+  </body>
+</html>
