@@ -3,6 +3,7 @@ import os
 from halo import Halo
 import base64
 import json
+import zipfile
 
 DROP = {1, 3}
 processed_data = []
@@ -22,6 +23,13 @@ class bcolors:
 
 processing_spinner = Halo(text="Processing heads.csv...", spinner="dots")
 processing_spinner.start()
+
+
+def add_folder_to_zip(zip_file, folder_path):
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            zip_file.write(file_path)
 
 
 def make_texture(hash):
@@ -108,3 +116,14 @@ with open(
 ) as versionfile:
     versionfile.write(f'tellraw @s {{"text": "Version {version}"}}\n')
 version_spinner.succeed(f"{bcolors.OKGREEN}Finished setting version!{bcolors.ENDC}")
+
+zip_spinner = Halo(text="Creating zip file...", spinner="dots")
+zip_spinner.start()
+
+with zipfile.ZipFile(f"aph-{version}.zip", "w", zipfile.ZIP_DEFLATED) as zf:
+    # Add a single file
+    zf.write("pack.mcmeta")
+
+    # Add a folder (recursively)
+    add_folder_to_zip(zf, "data")
+zip_spinner.succeed(f"{bcolors.OKGREEN}Finished creating zip file!{bcolors.ENDC}")
