@@ -1,0 +1,1 @@
+$function allplayerheads:give_head_final with storage allplayerheads:data heads.$(id)

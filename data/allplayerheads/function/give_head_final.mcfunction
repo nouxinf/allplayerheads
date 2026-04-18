@@ -1,0 +1,1 @@
+$give @s minecraft:player_head[profile={properties:[{name:"textures",value:"$(texture)"}]}]

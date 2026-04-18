@@ -1,8 +1,3 @@
-# we must enable all scoreboards here
-# scoreboard players enable @a B64
-
-# check if triggers are activated
-# execute as @a[scores={B64=1..}] run function allplayerheads:B64
-
-# reset all triggers
-# scoreboard players set @a[scores={B64=1..}] B64 0
+scoreboard players enable @a get_head
+execute as @a[scores={get_head=1..}] at @s run function allplayerheads:handle_trigger
+scoreboard players set @a[scores={get_head=1..}] get_head 0
