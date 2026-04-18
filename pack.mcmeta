@@ -2,6 +2,6 @@
   "pack": {
     "description": "A Minecraft datapack that lets you get any custom head off minecraft-heads.com, without using any plugins or mods.",
     "min_format": [94, 1],
-    "max_format": [94, 1]
+    "max_format": [101, 1]
   }
 }
