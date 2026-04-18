@@ -72,7 +72,7 @@ def reset_files():
         "data/allplayerheads/function/tick.mcfunction", "w", encoding="utf-8"
     ) as tickfile:
         tickfile.write("scoreboard players enable @a get_head\n")
-        tickfile.write("scoreboard players enable @a my_trigger\n")
+        tickfile.write("scoreboard players enable @a version\n")
         tickfile.write(
             "execute as @a[scores={get_head=1..}] at @s run function allplayerheads:handle_trigger\n"
         )
@@ -106,5 +106,5 @@ with open("version.txt", "r", encoding="utf-8") as versionfile:
 with open(
     "data/allplayerheads/function/version.mcfunction", "w", encoding="utf-8"
 ) as versionfile:
-    versionfile.write(f'# tellraw @s {"text": "Version {version}"}\n')
+    versionfile.write(f'tellraw @s {{"text": "Version {version}"}}\n')
 version_spinner.succeed(f"{bcolors.OKGREEN}Finished setting version!{bcolors.ENDC}")
