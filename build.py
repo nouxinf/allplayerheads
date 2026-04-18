@@ -121,9 +121,7 @@ zip_spinner = Halo(text="Creating zip file...", spinner="dots")
 zip_spinner.start()
 
 with zipfile.ZipFile(f"aph-{version}.zip", "w", zipfile.ZIP_DEFLATED) as zf:
-    # Add a single file
     zf.write("pack.mcmeta")
-
-    # Add a folder (recursively)
+    zf.write("pack.png")
     add_folder_to_zip(zf, "data")
 zip_spinner.succeed(f"{bcolors.OKGREEN}Finished creating zip file!{bcolors.ENDC}")
